@@ -1,0 +1,165 @@
+﻿@model IEnumerable<JoseArquietaJimenez.Models.Lista_Canciones>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@Html.Hidden("urlEliminar", Url.Action("Eliminar"))
+@Html.Hidden("urlCrearProducto", Url.Action("CrearProductos"))
+@Html.Hidden("urlEditarGetProductos", Url.Action("EditarGetProductos"))
+@Html.Hidden("urlEditarPostProductos", Url.Action("EditarPostProductos"))
+
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Script/Crud.js" )"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+}
+
+<h2>Index</h2>
+
+<p>
+    <input id="btnCrearProduct" type="submit" value="Agregar Canciones a Lista" />
+</p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grupo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ano)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genero)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grupo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ano)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                <a class="icon icon-editar" href="javascript:editarCancion('@item.id_Cancion')">Editar</a>|
+                @Html.ActionLink("Delete", "Delete", new { id = item.id_Cancion })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    @Html.Hidden("txtId")
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Editar Cancion</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-3 col-form-label mt-1">Titulo: </label>
+                        <div class="col-md-9 mt-1">
+                            <input type="text" class="form-control" id="txtTitulo" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-5 col-form-label mt-1">Grupo: </label>
+                        <div class="col-md-3 mt-1">
+                            <input type="text" class="form-control" id="txtGrupo" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-5 col-form-label mt-1">Ano: </label>
+                        <div class="col-md-3 mt-1">
+                            <input type="number" class="form-control" id="txtAno" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-5 col-form-label mt-1">Genero: </label>
+                        <div class="col-md-3 mt-1">
+                            <input type="text" class="form-control" id="txtGenero" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnEditProduct" data-eliminar="">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalCrea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Agregar Cancion</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-3 col-form-label mt-1">Titulo: </label>
+                        <div class="col-md-9 mt-1">
+                            <input type="text" class="form-control" id="txtTitulo" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-5 col-form-label mt-1">Grupo: </label>
+                        <div class="col-md-3 mt-1">
+                            <input type="text" class="form-control" id="txtGrupo" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-5 col-form-label mt-1">Ano: </label>
+                        <div class="col-md-3 mt-1">
+                            <input type="number" class="form-control" id="txtAno" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="username" class="col-md-5 col-form-label mt-1">Genero: </label>
+                        <div class="col-md-3 mt-1">
+                            <input type="text" class="form-control" id="txtGenero" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnCreaProduct" data-eliminar="">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
